@@ -1,0 +1,19 @@
+Arduino Code: 
+const int lm35Pin = A1;    // LM35 output pin is connected to A1 
+void setup() 
+{ 
+Serial.begin(9600);      
+// Start serial communication at 9600 baud 
+} 
+void loop() 
+{ 
+int adcValue; 
+float temperature; 
+adcValue = analogRead(lm35Pin);    // Read analog value from LM35 
+temperature = adcValue * 4.88;     // Convert ADC value into millivolts 
+temperature = temperature / 10;    // LM35 gives 10 mV per degree Celsius 
+Serial.print("Temperature = "); 
+Serial.print(temperature); 
+Serial.println(" Degree Celsius"); 
+delay(1000);                       
+} 
