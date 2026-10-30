@@ -1,0 +1,97 @@
+const int TRIG_PIN = 9;      // Trigger pin of ultrasonic sensor 
+const int ECHO_PIN = 10;     // Echo pin of ultrasonic sensor 
+const int BUZZER_PIN = 7;    // Buzzer connected to digital pin 7 
+const int RED_LED = 4;       
+// Red LED connected to digital pin 4 
+const int GREEN_LED = 5;     // Green LED connected to digital pin 5 
+// Set the maximum distance for detecting an intrusion 
+const int DISTANCE_THRESHOLD = 50;  // Intrusion limit is 50 cm 
+// The setup function runs only once when the Arduino starts 
+void setup() { 
+// Start serial communication at 9600 baud rate 
+Serial.begin(9600); 
+// Set the ultrasonic sensor trigger pin as OUTPUT 
+pinMode(TRIG_PIN, OUTPUT); 
+// Set the ultrasonic sensor echo pin as INPUT 
+pinMode(ECHO_PIN, INPUT); 
+// Set the buzzer pin as OUTPUT 
+pinMode(BUZZER_PIN, OUTPUT); 
+// Set the red LED pin as OUTPUT 
+pinMode(RED_LED, OUTPUT); 
+// Set the green LED pin as OUTPUT 
+pinMode(GREEN_LED, OUTPUT); 
+} 
+// The loop function runs continuously 
+void loop() { 
+// Variable to store the travel time of the ultrasonic wave 
+long duration; 
+// Variable to store the calculated distance in centimeters 
+int distance; 
+// Make sure the trigger pin is initially LOW 
+digitalWrite(TRIG_PIN, LOW); 
+// Wait for 2 microseconds 
+delayMicroseconds(2); 
+// Send a HIGH pulse to the trigger pin 
+digitalWrite(TRIG_PIN, HIGH); 
+// Keep the trigger pin HIGH for 10 microseconds 
+delayMicroseconds(10); 
+// Make the trigger pin LOW again 
+digitalWrite(TRIG_PIN, LOW); 
+// Measure the time taken by the ultrasonic wave 
+// to travel to the object and return to the sensor 
+duration = pulseIn(ECHO_PIN, HIGH);
+  // Calculate the distance of the object in centimeters 
+  // 0.034 cm/us is the approximate speed of sound 
+  // Divide by 2 because the sound travels to the object and back 
+  distance = duration * 0.034 / 2; 
+ 
+ 
+  // Display the measured distance on the Serial Monitor 
+  Serial.print("Target Distance: "); 
+ 
+  // Print the distance value 
+  Serial.print(distance); 
+ 
+  // Print the unit in centimeters 
+  Serial.println(" cm"); 
+ 
+ 
+  // Check whether an object is detected within 50 cm 
+  if (distance > 0 && distance < DISTANCE_THRESHOLD) { 
+ 
+    // Intrusion detected 
+ 
+    // Turn ON the red LED to indicate an intrusion 
+    digitalWrite(RED_LED, HIGH); 
+ 
+    // Turn OFF the green LED 
+    digitalWrite(GREEN_LED, LOW); 
+ 
+ 
+    // Turn ON the buzzer 
+    digitalWrite(BUZZER_PIN, HIGH); 
+ 
+    // Keep the buzzer ON for 150 milliseconds 
+    delay(150); 
+ 
+    // Turn OFF the buzzer 
+    digitalWrite(BUZZER_PIN, LOW); 
+ 
+    // Keep the buzzer OFF for 150 milliseconds 
+    // This creates a pulsing alarm sound 
+    delay(150); 
+  } 
+ 
+  else { 
+ 
+    // No intrusion detected – the area is secure 
+// Turn OFF the red LED 
+digitalWrite(RED_LED, LOW); 
+// Turn ON the green LED to indicate a secure condition 
+digitalWrite(GREEN_LED, HIGH); 
+// Keep the buzzer OFF 
+digitalWrite(BUZZER_PIN, LOW); 
+// Wait for 200 milliseconds before the next measurement 
+delay(200); 
+} 
+} 
