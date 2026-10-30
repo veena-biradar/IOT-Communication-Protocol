@@ -1,0 +1,26 @@
+Arduino Code: 
+const int ledPin = 13;       
+// LED is connected to digital pin 13 
+const int buttonPin = 2;     // Push button is connected to digital pin 2 
+void setup()                 
+// Setup function runs only once 
+{ 
+pinMode(ledPin, OUTPUT);           
+// Set LED pin as an output 
+pinMode(buttonPin, INPUT_PULLUP);  // Set button pin as input with internal pull-up 
+resistor 
+} 
+void loop()                  
+{ 
+// Loop function runs continuously 
+int buttonState = digitalRead(buttonPin);  // Read the current state of the push button 
+if (buttonState == LOW)    // Check if the button is pressed 
+{ 
+digitalWrite(ledPin, HIGH);  // Turn ON the LED 
+} 
+else                       
+// If the button is not pressed 
+{ 
+digitalWrite(ledPin, LOW);   // Turn OFF the LED
+} 
+} 
