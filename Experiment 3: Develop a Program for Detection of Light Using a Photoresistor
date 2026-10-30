@@ -1,0 +1,17 @@
+const int ldrPin = A0;       
+void setup() 
+{ 
+Serial.begin(9600);        
+} 
+// Photoresistor is connected to analog pin A0 
+// Start serial communication at 9600 baud 
+void loop() 
+{ 
+int ldrValue = analogRead(ldrPin);   // Read the analog value from the LDR 
+Serial.print("LDR Value: ");         
+Serial.println(ldrValue);            
+delay(500);                          
+// Display text on Serial Monitor 
+// Display the sensor reading 
+// Wait for 500 milliseconds 
+}
